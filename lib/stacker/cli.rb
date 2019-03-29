@@ -68,14 +68,11 @@ module Stacker
         if stack.exists?
           next unless full_diff stack
 
-          if yes? "Update remote template with these changes (y/n)?"
-            time = Benchmark.realtime do
-              stack.update allow_destructive: options['allow_destructive']
-            end
-            Stacker.logger.info formatted_time stack_name, 'updated', time
-          else
-            Stacker.logger.warn 'Update skipped'
+          "Update remote template with these changes (y/n)?"
+          time = Benchmark.realtime do
+            stack.update allow_destructive: options['allow_destructive']
           end
+          Stacker.logger.info formatted_time stack_name, 'updated', time
         else
           if yes? "#{stack.name} does not exist. Create it (y/n)?"
             time = Benchmark.realtime do
